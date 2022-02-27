@@ -33,6 +33,8 @@ public class main {
         System.out.println("test1 = " + test.convert(date1) + "\n");
 
         System.out.println("test2 = " + test.convert(date2));
+        
+        System.out.println(test.getImplementationInfo());
 
     }
 }
