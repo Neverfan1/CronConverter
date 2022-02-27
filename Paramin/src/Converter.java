@@ -280,14 +280,14 @@ public class Converter implements DatesToCronConverter {
 
 
 
-    @Override
+   @Override
     public String getImplementationInfo() {
         // ФИО, имя класса реализации, пакет, ссылка на github
-        System.out.println("Парамин Данила Андреевич" + this.getClass().getSimpleName() + " "
+        return "Парамин Данила Андреевич" + " " + this.getClass().getSimpleName() + " "
                 + getClass().getPackage().getName() + " "
-                + "https://github.com/Neverfan1/CronConverter");
+                + "https://github.com/Neverfan1/CronConverter";
 
-        return null;
+
     }
 }
 
