@@ -82,7 +82,6 @@ public class Converter implements DatesToCronConverter {
                         .collect(Collectors.toList());
 
 
-
         //sorting
 //        Collections.sort (year);
 //        Collections.sort (month);
@@ -97,7 +96,7 @@ public class Converter implements DatesToCronConverter {
 
 
 //----------------------------------------------------------------------------------------------------------------------
-       // “0 * * * * MON”.
+        // “0 * * * * MON”.
         // * * * * *
         // | | | | |
         // | | | | +----- Дни недели (диапазон: 1-7)
@@ -111,30 +110,31 @@ public class Converter implements DatesToCronConverter {
         REhour(hour1, day_of_month1, result);
         REday_of_month(day_of_month1, year1, result);
         REmonth(year1, month1, result);
-        REday_of_week(day_of_week1, day_of_month1,result);
+        REday_of_week(day_of_week1, day_of_month1, result);
 
 
         return result.toString();
 
 
-
     }
 
     // SECONDS
-    private void REsec(List<Integer> s, StringBuilder res)
-    {
-        if (s.contains(0)) {
-            res.append("0 ");
+    private void REsec(List<Integer> s, StringBuilder res) {
+        if (s.size() == 1){ //          FIX
+            if (s.contains(0)) {
+                res.append("0 ");
+            } else {
+                res.append("*/").append(s.get(0)).append(" ");
+
+            }
         }
-
-            else {
-               res.append("*/").append(s.get(0)).append(" ");
-
+        else { // FIX
+            res.append("* "); // FIX
         }
     }
+
     // MINUTES
-    private void REmin(List<Integer> m, StringBuilder res)
-    {
+    private void REmin(List<Integer> m, StringBuilder res) {
 
         if (m.size() == 1 && m.contains(0)) {
             res.append("0 ");
@@ -146,10 +146,8 @@ public class Converter implements DatesToCronConverter {
     }
 
 
-
     // HOURS
-    private void REhour(List<Integer> h, List<Integer> d, StringBuilder res)
-    {
+    private void REhour(List<Integer> h, List<Integer> d, StringBuilder res) {
         if (h.size() == 1) {
             if (h.contains(0)) {
                 res.append("0 ");
@@ -162,37 +160,34 @@ public class Converter implements DatesToCronConverter {
             res.append("* ");
         }
     }
+
     // DAYS_OF_MONTH
-    private void REday_of_month(List<Integer> d, List<Integer> mon, StringBuilder res)
-    {
+    private void REday_of_month(List<Integer> d, List<Integer> mon, StringBuilder res) {
         if (d.size() == 1 && mon.size() > 1) {
             res.append(d.get(0)).append(" ");
-        }
-        else {
+        } else {
             res.append("* ");
         }
     }
+
     // MONTHS
-    private void REmonth(List<Integer> y, List<Integer> mon, StringBuilder res)
-    {
+    private void REmonth(List<Integer> y, List<Integer> mon, StringBuilder res) {
         if (mon.size() == 1 && y.size() > 1) {
             res.append(mon.get(mon.size() - 1)).append(" ");
         } else {
             res.append("* ");
         }
     }
+
     // DAYS_OF_WEEK
     private void REday_of_week(List<Integer> dow, List<Integer> d, StringBuilder res) throws DatesToCronConvertException {
         if (dow.size() == 1) {
             res.append(day_to_string_EN(dow.get(0)));
-        }
-        else if (dow.size() > 1){
+        } else if (dow.size() > 1) {
             res.append("* ");
-        }
-        else if (d.size() > 7){
+        } else if (d.size() > 7) {
             res.append(day_to_string_EN(dow.get(0))).append("-").append(day_to_string_EN(dow.get(dow.size() - 1)));
-        }
-        else {
+        } else {
             throw new DatesToCronConvertException();
         }
 
@@ -279,8 +274,7 @@ public class Converter implements DatesToCronConverter {
     }
 
 
-
-   @Override
+    @Override
     public String getImplementationInfo() {
         // ФИО, имя класса реализации, пакет, ссылка на github
         return "Парамин Данила Андреевич" + " " + this.getClass().getSimpleName() + " "
